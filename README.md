@@ -1,0 +1,2 @@
+# dotto
+My dotfile repository
