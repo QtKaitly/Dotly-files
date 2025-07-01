@@ -1,2 +1,2 @@
-# dotto
-My dotfile repository
+# Dotly files
+A repository for my configuration files
