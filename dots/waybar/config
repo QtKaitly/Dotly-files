@@ -7,7 +7,7 @@
 
     "position": "top",
 
-    "height": 20,
+    "height": 30,
 
     "margin-left": 0,
     "margin-bottom": 0,
@@ -89,11 +89,13 @@
         "tooltip": false,
         "on-click": "gsimplecal"
     },
+
     "clock#2": {
         "format": " {:%d-%h-%Y}",
         "tooltip": false,
         "on-click": "gsimplecal"
     },
+
     "clock#3": {
         "format": " {:%H:%M:%S %p}",
         "tooltip": false,
@@ -158,7 +160,7 @@
         "format-disconnected": "睊",
         "tooltip-format": "{essid}",
         "on-click": "~/.config/waybar/scripts/network/rofi-network-manager.sh",
-        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
     },
     "custom/storage": {
         "format": " {}",
@@ -225,7 +227,7 @@
             "spotify": "",
             "default": "🎜"
         },
-        "escape": true,
+        "escape": true
         //"exec": "~/.config/waybar/mediaplayer.py" // Script in resources folder
         // "exec": "~/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
@@ -254,7 +256,7 @@
       "exec": {
         "pre": "if unit_status=\"$(systemctl --user is-active gammastep)\"; then\nstatus=\"$unit_status ($(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))\"\nelse\nstatus=\"$unit_status\"\nfi",
         "alt": "${status:-inactive}",
-        "tooltip": "Gammastep is $status",
+        "tooltip": "Gammastep is $status"
       },
       "format": "{icon}",
       "format-icons": {
@@ -268,9 +270,9 @@
         "active (Day)": " ",
         "active (Daytime)": " ",
         "active (Transition (Day)": " ",
-        "active (Transition (Daytime)": " ",
+        "active (Transition (Daytime)": " "
       },
-      "on-click": "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep",
+      "on-click": "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep"
     },
 
     "cpu": {
@@ -332,12 +334,12 @@
             "7": "七",
             "8": "八",
             "9": "九",
-            "10": "十",
+            "10": "十"
         },
         "on-scroll-up": "hyprctl dispatch workspace e+1 1>/dev/null",
         "on-scroll-down": "hyprctl dispatch workspace e-1 1>/dev/null",
         "sort-by-number": true,
-        "active-only": false,
+        "active-only": false
     },
 
     "hyprland/window": {
@@ -388,7 +390,7 @@
             "portable": " ",
             "car": " ",
             "default": [" ", " ", " "]
-        },
+        }
     },
 
     "tray": {
