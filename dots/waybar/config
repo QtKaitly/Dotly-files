@@ -7,7 +7,7 @@
 
     "position": "top",
 
-    "height": 30,
+    "height": 36,
 
     "margin-left": 0,
     "margin-bottom": 0,
@@ -15,7 +15,7 @@
 
     "spacing": 4, // Gaps between modules
 
-    "output": "DP-3",
+    "output": "!HDMI-A-1",
 
     "modules-left": [
         "custom/rofi",
@@ -23,31 +23,23 @@
         "idle_inhibitor",
         "memory",
         "cpu",
-        //"mpd",
-        //"custom/spotify",
-        //"custom/media",
-        "hyprland/workspaces",
-        //"hyprland/submap",
         "hyprland/window"
-        //"custom/gammastep"
     ],
     "modules-center": [
         "custom/weather",
+        "hyprland/workspaces",
         "clock#date"
 
     ],
     "modules-right": [
         "custom/pacman",
-        //"backlight",
         "custom/storage",
         "battery",
         //"network",
         "pulseaudio",
         //"bluetooth",
         //"wireplumber",
-        //"custom/screenshot_t",
         "tray",
-        //"custom/power"
         "custom/sp"
     ],
 
@@ -60,7 +52,6 @@
         "format": "    ",
         "tooltip": false
     },
-
     "custom/sp1": {
         "format": " | ",
         "tooltip": false
@@ -69,39 +60,20 @@
         "format": " |",
         "tooltip": false
     },
-
-
     "custom/rofi": {
         "format": "",
         "tooltip": false,
-        "on-click-right": "nwg-drawer",
+        "on-click-right": "uuctl",
         "on-click": "rofi -show drun",
         "on-click-middle": "pkill -9 rofi"
     },
-    "custom/screenshot_t":{
-        "format":" ",
-        "on-click": "~/.config/hypr/scripts/screenshot_full",
+    "clock#date": {
+        "format": "󰥔  {:%I:%M %p      %e %b}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "today-format": "<b>{}</b>",
+        "on-click": "planify",
         "on-click-right":"~/.config/hypr/scripts/screenshot_area"
     },
-
-    "clock#1": {
-        "format": " {:%a}",
-        "tooltip": false,
-        "on-click": "gsimplecal"
-    },
-
-    "clock#2": {
-        "format": " {:%d-%h-%Y}",
-        "tooltip": false,
-        "on-click": "gsimplecal"
-    },
-
-    "clock#3": {
-        "format": " {:%H:%M:%S %p}",
-        "tooltip": false,
-        "on-click": "gsimplecal"
-    },
-
     "temperature": {
         // "thermal-zone": 1,
         "interval": 4,
@@ -115,13 +87,11 @@
         "min-length": 7,
         "on-click": "coolercontrol"
     },
-
     "memory": {
         "interval": 30,
-        "format": " {free:0.0f} GB",
+        "format": " {avail:0.0f} GB",
         "on-click": "kitty -e btop"
     },
-
     "battery": {
         "interval": 2,
         "states": {
@@ -153,15 +123,6 @@
         "tooltip-format-wifi": " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}",
         "interval": 10
     },
-    "network2": {
-        /* "format-wifi": "", */
-        "format-wifi": "{icon}",
-        "format-ethernet": " ",
-        "format-disconnected": "睊",
-        "tooltip-format": "{essid}",
-        "on-click": "~/.config/waybar/scripts/network/rofi-network-manager.sh",
-        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
-    },
     "custom/storage": {
         "format": " {}",
         "format-alt": "{percentage}% ",
@@ -169,17 +130,6 @@
         "return-type": "json",
         "interval": 60,
         "exec": "~/.config/waybar/modules/storage.sh"
-    },
-
-    "backlight": {
-        "device": "intel_backlight",
-        "format": "{icon} {percent}%",
-        "format-alt": "{percent}% {icon}",
-        "format-alt-click": "click-right",
-        //"format-icons": ["", ""],
-        "format-icons": ["", ""],
-        "on-scroll-down": "brightnessctl s 5%-",
-        "on-scroll-up": "brightnessctl s +5%"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -194,7 +144,8 @@
         "format-alt": "{alt}: {}",
         "format-alt-click": "click-right",
         "interval": 3600,
-        "exec": "curl -s 'https://wttr.in/Paris?4Tqup'",
+        "exec": "curl -s 'https://wttr.in/CKV?4Tqup&format=1'",
+        "on-click": "floorp --new-window https://wttr.in/CKV?4Tqup",
         //"return-type": "json",
         //"exec": "~/.config/waybar/modules/weather.sh",
         "exec-if": "ping wttr.in -c1"
@@ -209,16 +160,6 @@
         "max-length": 10,
         "min-length": 5
     },
-
-"custom/spotify": {
-    "exec": "~/.config/waybar/mediaplayer.py --player spotify",
-    "format": "{}  ",
-    "return-type": "json",
-    "on-click": "playerctl play-pause",
-    "on-scroll-up": "playerctl next",
-    "on-scroll-down": "playerctl previous"
-},
-
     "custom/media": {
         "format": "{0} {1}",
         "return-type": "json",
@@ -227,54 +168,10 @@
             "spotify": "",
             "default": "🎜"
         },
-        "escape": true
+        "escape": true,
         //"exec": "~/.config/waybar/mediaplayer.py" // Script in resources folder
         // "exec": "~/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
-
-    "custom/power": {
-        "format": " 󰐥 ",
-        "tooltip": false,
-        "on-click": "wlogout"
-    },
-
-    "clock": {
-        "format": "  {:%I:%M %p   %e %b}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "today-format": "<b>{}</b>"
-    },
-
-    "clock#date": {
-        "format": "󰥔  {:%I:%M %p      %e %b}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "today-format": "<b>{}</b>"
-    },
-
-    "custom/gammastep": {
-      "interval": 5,
-      "return-type": "json",
-      "exec": {
-        "pre": "if unit_status=\"$(systemctl --user is-active gammastep)\"; then\nstatus=\"$unit_status ($(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))\"\nelse\nstatus=\"$unit_status\"\nfi",
-        "alt": "${status:-inactive}",
-        "tooltip": "Gammastep is $status"
-      },
-      "format": "{icon}",
-      "format-icons": {
-        "activating": "󰁪 ",
-        "deactivating": "󰁪 ",
-        "inactive": "? ",
-        "active (Night)": " ",
-        "active (Nighttime)": " ",
-        "active (Transition (Night)": " ",
-        "active (Transition (Nighttime)": " ",
-        "active (Day)": " ",
-        "active (Daytime)": " ",
-        "active (Transition (Day)": " ",
-        "active (Transition (Daytime)": " "
-      },
-      "on-click": "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep"
-    },
-
     "cpu": {
         "interval": 1,
         //"format": " {}%", // Icon: microchip
@@ -298,32 +195,15 @@
         "tooltip-format": "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})"
     },
 
-    "custom/title": {
-        "format": "{}",
-        "interval": 0,
-        "return-type": "json",
-        //"max-length": 35,
-        "tooltip": false
-    },
-
-    "custom/title#name": {
-        "format": "{}",
-        "interval": 0,
-        "return-type": "json",
-
-        "max-length": 35,
-        "exec": "$HOME/.scripts/title"
-    },
-
-    /*"custom/keyboard": {
+    "custom/keyboard": {
         "format": " {}",
         "interval": 1,
         "exec": "$HOME/.config/waybar/get_kbdlayout.sh"
-    },*/
-
+    },
     "hyprland/workspaces": {
+        "output": ["DP-3", "DP-2"],
         "all-outputs": true,
-        "format": "{name}",
+        "format": "{icon}",
         "format-icons": {
             "1": "一",
             "2": "二",
@@ -334,14 +214,27 @@
             "7": "七",
             "8": "八",
             "9": "九",
-            "10": "十"
+            "10": "十",
+            "11": "十一",
+            "12": "十二",
+            "13": "十三",
+            "14": "十四",
+            "15": "十五",
+            "16": "十六",
+            "17": "十七",
+            "18": "十八",
+            "19": "十九",
+            "20": "十十",
         },
+        //"persistent-workspaces": {
+        //"*": 5, // 5 workspaces by default on every monitor
+		//    "HDMI-A-1": 3 // but only three on HDMI-A-1
+	    //}
         "on-scroll-up": "hyprctl dispatch workspace e+1 1>/dev/null",
         "on-scroll-down": "hyprctl dispatch workspace e-1 1>/dev/null",
         "sort-by-number": true,
-        "active-only": false
+        "active-only": false,
     },
-
     "hyprland/window": {
         "max-length": 100,
         "separate-outputs": true
@@ -366,7 +259,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "kitty -e pacmixer 'htop'",
+        "on-click": "kitty --class pacmixer -e pacmixer 'htop'",
         "on-click-right": "amixer sset Master toggle"
     },
 
@@ -390,7 +283,7 @@
             "portable": " ",
             "car": " ",
             "default": [" ", " ", " "]
-        }
+        },
     },
 
     "tray": {
