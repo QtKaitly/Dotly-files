@@ -1,352 +1,312 @@
 {
-    // -------------------------------------------------------------------------
-    // Global configuration
-    // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // Global configuration
+  // -------------------------------------------------------------------------
 
-    "layer": "bottom",
+  "layer": "bottom",
 
-    "position": "top",
+  "position": "top",
 
-    "height": 0,
+  "height": 0,
 
-    "margin-left": 0,
-    "margin-bottom": 0,
-    "margin-right": 0,
+  "margin-left": 0,
+  "margin-bottom": 0,
+  "margin-right": 0,
 
-    "spacing": 0, // Gaps between modules
+  "spacing": 0, // Gaps between modules
 
-    "output": "!HDMI-A-1",
+  "output": "!HDMI-A-1",
 
-    "modules-left": [
-        "custom/sp",
-        "custom/rofi",
-        "custom/sp",      
-        "temperature",
-        "custom/sp1",
-        "idle_inhibitor",
-        "custom/sp1",
-        "group/hardware",
-        "custom/sp1",
-        "hyprland/window"
-    ],
-    "modules-center": [
-        "custom/weather",
-        "hyprland/workspaces",
-        "clock#date"
+  "modules-left": [
+    "custom/sp",
+    "custom/rofi",
+    "custom/sp",
+    "temperature",
+    "custom/sp1",
+    "idle_inhibitor",
+    "custom/sp1",
+    "group/hardware",
+    "custom/sp1",
+    "hyprland/window"
+  ],
+  "modules-center": ["custom/weather", "hyprland/workspaces", "clock#date"],
+  "modules-right": [
+    "custom/pacman",
+    "custom/sp1",
+    "battery",
+    //"custom/sp1",
+    //"network",
+    "mpris",
+    "custom/sp1",
+    "pulseaudio",
+    "custom/sp1",
+    "bluetooth",
+    "custom/sp1",
+    //"wireplumber",
+    "tray",
+    "custom/sp"
+  ],
 
-    ],
-    "modules-right": [
-        "custom/pacman",
-        "custom/sp1",
-        "battery",
-        //"custom/sp1",
-        //"network",
-        "mpris",
-        "custom/sp1",
-        "pulseaudio",
-        "custom/sp1",
-        "bluetooth",
-        "custom/sp1",
-        //"wireplumber",
-        "tray",
-        "custom/sp"
-    ],
+  // -------------------------------------------------------------------------
+  // Modules
+  // -------------------------------------------------------------------------
 
-
-    // -------------------------------------------------------------------------
-    // Modules
-    // -------------------------------------------------------------------------
-
-    "custom/sp": {
-        "format": " ",
-        "tooltip": false
+  "custom/sp": {
+    "format": " ",
+    "tooltip": false
+  },
+  "custom/sp1": {
+    "format": " | ",
+    "tooltip": false
+  },
+  "custom/sp2": {
+    "format": " |",
+    "tooltip": false
+  },
+  "custom/rofi": {
+    "format": "",
+    "tooltip": false,
+    "on-click-right": "uuctl",
+    "on-click": "rofi -show drun",
+    "on-click-middle": "pkill -9 rofi"
+  },
+  "temperature": {
+    // "thermal-zone": 1,
+    "interval": 4,
+    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    "critical-threshold": 80,
+    // "format-critical": " {temperatureC}°C",
+    "format-critical": "<span font='14' rise='-2800'></span>  {temperatureC}°C",
+    "format": "<span font='14' rise='-2800'>{icon}</span>  {temperatureC}°C",
+    "format-icons": ["", "", ""],
+    "max-length": 9,
+    "min-length": 9,
+    "on-click": "coolercontrol"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰅶",
+      "deactivated": "󰾪"
     },
-    "custom/sp1": {
-        "format": " | ",
-        "tooltip": false
+    "tooltip": "true"
+  },
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false
     },
-    "custom/sp2": {
-        "format": " |",
-        "tooltip": false
+    "modules": ["cpu", "memory", "custom/sp1", "custom/storage", "custom/sp1"]
+  },
+  "custom/storage": {
+    "format": "<span font='16' rise='-2800'>󱛟</span> {}",
+    "format-alt": "{percentage}% <span font='16' rise='-2800'>󱛟</span>",
+    "format-alt-click": "click-right",
+    "return-type": "json",
+    "interval": 60,
+    "exec": "~/.config/waybar/modules/storage.sh"
+  },
+  "memory": {
+    "interval": 30,
+    "format": "<span font='16' rise='-2800'></span> {avail:0.0f} GB",
+    "on-click": "kitty -e btop"
+  },
+  "cpu": {
+    "interval": 1,
+    //"format": " {}%", // Icon: microchip
+    "format": "{max_frequency}GHz <span color=\"darkgray\">| {usage}%</span>",
+    "max-length": 13,
+    "min-length": 13
+  },
+  "hyprland/window": {
+    "max-length": 100,
+    "separate-outputs": true
+  },
+
+  "custom/weather": {
+    "format": "{}",
+    "format-alt": "{alt}: {text}",
+    "format-alt-click": "click-right",
+    "interval": 3600,
+    "exec": "curl -s 'https://wttr.in/CKV?4Tqp&format=1'",
+    "on-click": "floorp --new-window https://wttr.in/CKV?4Tqp",
+    //"return-type": "json",
+    //"exec": "~/.config/waybar/modules/weather.sh",
+    "exec-if": "ping wttr.in -c1"
+  },
+  "hyprland/workspaces": {
+    "all-outputs": true,
+    "ignore-workspaces": [22, 23],
+    "format": "<span font='7'>{icon}</span>{windows}",
+    "format-window-separator": "",
+    "window-rewrite-default": "<span font='11'></span>",
+    "window-rewrite": {
+      "class<youtube>": "<span font='11'></span>",
+      "class<floorp>": "<span font='11'>󰈹</span>",
+      "class<kitty>": "<span font='11'></span>",
+      "class<thunar>": "<span font='11'></span>",
+      "class<obsidian>": "<span font='11'></span>",
+      "title<.*VSCodium>": "<span font='11'></span>",
+      "class<steam>": "<span font='11'></span>",
+      "class<equibop>": "<span font='11'></span>",
+      "class<plex>": "<span font='11'>󰚺</span>",
+      "class<org.qbittorrent.qBittorrent>": "<span font='11'></span>",
+      "title<Keychron.*|VIA>": "<span font='11'>󰧺</span>",
+      "class<net.lutris.Lutris>": "<span font='11'>󰺵</span>"
     },
-    "custom/rofi": {
-        "format": "",
-        "tooltip": false,
-        "on-click-right": "uuctl",
-        "on-click": "rofi -show drun",
-        "on-click-middle": "pkill -9 rofi"
+    "format-icons": {
+      "1": "頁一\n",
+      "2": "頁二\n",
+      "3": "頁三\n",
+      "4": "頁四\n",
+      "5": "頁五\n",
+      "6": "頁六\n",
+      "7": "頁七\n",
+      "8": "頁八\n",
+      "9": "頁九\n",
+      "10": "頁十\n",
+      "11": "頁十一\n",
+      "12": "頁十二\n",
+      "13": "頁十三\n",
+      "14": "頁十四\n",
+      "15": "頁十五\n",
+      "16": "頁十六\n",
+      "17": "頁十七\n",
+      "18": "頁十八\n",
+      "19": "頁十九\n",
+      "20": "頁二十\n",
+      "21": "頁二十\n一",
+      "22": "頁二十\n二",
+      "23": "頁二十\n三",
+      "24": "頁二十\n四",
+      "25": "頁二十\n五",
+      "26": "頁二十\n六",
+      "27": "頁二十\n七",
+      "28": "頁二十\n八",
+      "29": "頁二十\n九",
+      "30": "頁三十\n",
+      "31": "頁三十\n一",
+      "32": "頁三十\n二",
+      "33": "頁三十\n三",
+      "34": "頁三十\n四",
+      "35": "頁三十\n五",
+      "36": "頁三十\n六",
+      "37": "頁三十\n七",
+      "38": "頁三十\n八",
+      "39": "頁三十\n九",
+      "Steam": "スチーム\n",
+      "Chat": "チャット\n",
+      "VSCode": "コード\n"
     },
-    "temperature": {
-        // "thermal-zone": 1,
-        "interval": 4,
-        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": " {temperatureC}°C",
-        "format-critical": "<span font='14' rise='-2800'></span>  {temperatureC}°C",
-        "format": "<span font='14' rise='-2800'>{icon}</span>  {temperatureC}°C",
-        "format-icons": ["", "", ""],
-        "max-length": 9,
-        "min-length": 9,
-        "on-click": "coolercontrol"
+    "persistent-workspaces": {
+      "DP-3": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "DP-2": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "󰅶",
-            "deactivated": "󰾪"
-        },
-        "tooltip": "true"
+    "on-scroll-up": "hyprctl dispatch workspace e+1 1>/dev/null",
+    "on-scroll-down": "hyprctl dispatch workspace e-1 1>/dev/null",
+    "sort-by-number": true,
+    "active-only": false
+  },
+  "clock#date": {
+    "format": "<span font='16' rise='-2900'>󰥔</span> {:%I:%M %p  <span font='16' rise='-2900'></span> %e %b}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "today-format": "<b>{}</b>",
+    "on-click": "{/usr/lib/floorp/floorp --name calendar --profile '/home/kaitly/.floorp/0dfnuyvo.default-release' --start-ssb '{ed663cf6-4553-4fc4-8ee5-1f1ffbcf8b12}'}",
+    "on-click-right": "~/.config/hypr/scripts/screenshot_area"
+  },
+
+  "custom/pacman": {
+    "format": "<span font='16' rise='-2900'></span> {}",
+    "interval": 3600, // every hour
+    "exec": "checkupdates | wc -l", // # of updates
+    "exec-if": "exit 0", // always run; consider advanced run conditions
+    "on-click": "kitty -e 'paru'; pkill -SIGRTMIN+8 waybar", // update system
+    "signal": 8,
+    "max-length": 10,
+    "min-length": 5
+  },
+  "mpris": {
+    "interval": 1,
+    "format": "<span font='16' rise='-2900'>{status_icon}</span> <span font='16' rise='-2900'>{player_icon}</span> {dynamic}",
+    "format-paused": "<span font='16' rise='-2900'>{status_icon}</span> <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "",
+      "Feishin": "󰎆"
     },
-    "group/hardware": {
-		"orientation": "inherit",
-        "drawer": {
-            "transition-duration": 500,
-            "transition-left-to-right": false
-        },
-		"modules": [
-			"cpu",
-			"memory",
-            "custom/sp1",
-			"custom/storage",
-            "custom/sp1"
-		]
-	},
-    "custom/storage": {
-        "format": "<span font='16' rise='-2800'>󱛟</span> {}",
-        "format-alt": "{percentage}% <span font='16' rise='-2800'>󱛟</span>",
-        "format-alt-click": "click-right",
-        "return-type": "json",
-        "interval": 60,
-        "exec": "~/.config/waybar/modules/storage.sh"
+    "status-icons": {
+      "paused": "󱖒",
+      "playing": "󱖑"
     },
-    "memory": {
-        "interval": 30,
-        "format": "<span font='16' rise='-2800'></span> {avail:0.0f} GB",
-        "on-click": "kitty -e btop"
+    "max-length": 60,
+    "dynamic-len": 58,
+    "tooltip": true,
+    "enable-tooltip-len-limits": true
+  },
+  "pulseaudio": {
+    "scroll-step": 1, // %, can be a float
+    "format": "<span font='16' rise='-2900'>{icon}</span> {volume}% <span font='16' rise='-2900'>{format_source}</span>",
+    "format-bluetooth": "<span font='12' rise='-1400'></span> <span font='16' rise='-2900'>{icon}</span> {volume}%",
+    "format-bluetooth-muted": "<span font='12' rise='-1400'></span> <span font='12' rise='-1400'>{icon}</span><span font='12' rise='-1400'></span>",
+    "format-muted": "<span font='16' rise='-2900'></span> <span font='16' rise='-2900'>{format_source}</span>",
+    //"format-source": "{volume}% ",
+    //"format-source-muted": "",
+    "format-source": "",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "unknown": "󰓃",
+      "default": ["", "", ""]
     },
-    "cpu": {
-        "interval": 1,
-        //"format": " {}%", // Icon: microchip
-        "format": "{max_frequency}GHz <span color=\"darkgray\">| {usage}%</span>",
-        "max-length": 13,
-        "min-length": 13
-    },
-    "hyprland/window": {
-        "max-length": 100,
-        "separate-outputs": true
-    },
+    "on-click": "kitty --class pacmixer -e pacmixer 'htop'",
+    "on-click-right": "amixer sset Master toggle"
+  },
+  "bluetooth": {
+    "format": "<span font='12' rise='-1400'></span> {status}",
+    "format-connected": "<span font='12' rise='-2000'></span> {device_alias}",
+    "format-connected-battery": "<span font='12' rise='-2000'></span> {device_alias} {device_battery_percentage}%",
+    // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "blueberry"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 4
+  },
 
-
-
-
-
-    "custom/weather": {
-        "format": "{}",
-        "format-alt": "{alt}: {text}",
-        "format-alt-click": "click-right",
-        "interval": 3600,
-        "exec": "curl -s 'https://wttr.in/CKV?4Tqp&format=1'",
-        "on-click": "floorp --new-window https://wttr.in/CKV?4Tqp",
-        //"return-type": "json",
-        //"exec": "~/.config/waybar/modules/weather.sh",
-        "exec-if": "ping wttr.in -c1"
-    },
-    "hyprland/workspaces": {
-        "all-outputs": true,
-        "ignore-workspaces": [ 22, 23 ],
-        "format": "<span font='7'>{icon}</span>{windows}",
-        "format-window-separator": "",
-        "window-rewrite-default": "<span font='11'></span>",
-        "window-rewrite": {
-            "class<youtube>": "<span font='11'></span>",
-            "class<floorp>": "<span font='11'>󰈹</span>",
-            "class<kitty>": "<span font='11'></span>",
-            "class<thunar>": "<span font='11'></span>",
-            "class<obsidian>": "<span font='11'></span>",
-            "title<.*VSCodium>": "<span font='11'></span>",
-            "class<steam>": "<span font='11'></span>",
-            "class<equibop>": "<span font='11'></span>",
-            "class<plex>": "<span font='11'>󰚺</span>",
-            "class<org.qbittorrent.qBittorrent>": "<span font='11'></span>",
-            "title<Keychron.*|VIA>":"<span font='11'>󰧺</span>",
-            "class<net.lutris.Lutris>": "<span font='11'>󰺵</span>"
-        },
-        "format-icons": {
-            "1": "頁一\n",
-            "2": "頁二\n",
-            "3": "頁三\n",
-            "4": "頁四\n",
-            "5": "頁五\n",
-            "6": "頁六\n",
-            "7": "頁七\n",
-            "8": "頁八\n",
-            "9": "頁九\n",
-            "10": "頁十\n",
-            "11": "頁十一\n",
-            "12": "頁十二\n",
-            "13": "頁十三\n",
-            "14": "頁十四\n",
-            "15": "頁十五\n",
-            "16": "頁十六\n",
-            "17": "頁十七\n",
-            "18": "頁十八\n",
-            "19": "頁十九\n",
-            "20": "頁二十\n",
-            "21": "頁二十\n一",
-            "22": "頁二十\n二",
-            "23": "頁二十\n三",
-            "24": "頁二十\n四",
-            "25": "頁二十\n五",
-            "26": "頁二十\n六",
-            "27": "頁二十\n七",
-            "28": "頁二十\n八",
-            "29": "頁二十\n九",
-            "30": "頁三十\n",
-            "31": "頁三十\n一",
-            "32": "頁三十\n二",
-            "33": "頁三十\n三",
-            "34": "頁三十\n四",
-            "35": "頁三十\n五",
-            "36": "頁三十\n六",
-            "37": "頁三十\n七",
-            "38": "頁三十\n八",
-            "39": "頁三十\n九",
-            "Steam": "スチーム\n",
-            "Chat": "チャット\n"
-        },
-        "persistent-workspaces": {
-            "DP-3": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-            "DP-2": [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
-        },
-        "on-scroll-up": "hyprctl dispatch workspace e+1 1>/dev/null",
-        "on-scroll-down": "hyprctl dispatch workspace e-1 1>/dev/null",
-        "sort-by-number": true,
-        "active-only": false
-    },
-    "clock#date": {
-        "format": "<span font='16' rise='-2900'>󰥔</span> {:%I:%M %p  <span font='16' rise='-2900'></span> %e %b}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "today-format": "<b>{}</b>",
-        "on-click": "{/usr/lib/floorp/floorp --name calendar --profile '/home/kaitly/.floorp/0dfnuyvo.default-release' --start-ssb '{ed663cf6-4553-4fc4-8ee5-1f1ffbcf8b12}'}",
-        "on-click-right":"~/.config/hypr/scripts/screenshot_area"
-    },
-
-
-
-
-
-
-
-    "custom/pacman": {
-        "format": "<span font='16' rise='-2900'></span> {}",
-        "interval": 3600,                     // every hour
-        "exec": "checkupdates | wc -l",       // # of updates
-        "exec-if": "exit 0",                  // always run; consider advanced run conditions
-        "on-click": "kitty -e 'paru'; pkill -SIGRTMIN+8 waybar", // update system
-        "signal": 8,
-        "max-length": 10,
-        "min-length": 5
-    },
-    "mpris": {
-        "interval": 1,
-        "format": "<span font='16' rise='-2900'>{status_icon}</span> <span font='16' rise='-2900'>{player_icon}</span> {dynamic}", 
-	    "format-paused": "<span font='16' rise='-2900'>{status_icon}</span> <i>{dynamic}</i>",
-	    "player-icons": { 
-	    	"default": "",
-	    	"Feishin": "󰎆"
-    	},
-    	"status-icons": {
-    		"paused": "󱖒",
-            "playing": "󱖑"
-        },
-        "max-length": 60,
-        "dynamic-len":58,
-        "tooltip": true,
-        "enable-tooltip-len-limits": true
-    },
-    "pulseaudio": {
-        "scroll-step": 1, // %, can be a float
-        "format": "<span font='16' rise='-2900'>{icon}</span> {volume}% <span font='16' rise='-2900'>{format_source}</span>",
-        "format-bluetooth": "<span font='12' rise='-1400'></span> <span font='16' rise='-2900'>{icon}</span> {volume}%",
-        "format-bluetooth-muted": "<span font='12' rise='-1400'></span> <span font='12' rise='-1400'>{icon}</span><span font='12' rise='-1400'></span>",
-        "format-muted": "<span font='16' rise='-2900'></span> <span font='16' rise='-2900'>{format_source}</span>",
-        //"format-source": "{volume}% ",
-        //"format-source-muted": "",
-        "format-source": "",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "unknown": "󰓃",
-            "default": ["", "", ""]
-        },
-        "on-click": "kitty --class pacmixer -e pacmixer 'htop'",
-        "on-click-right": "amixer sset Master toggle"
-    },
-    "bluetooth": {
-        "format": "<span font='12' rise='-1400'></span> {status}",
-        "format-connected": "<span font='12' rise='-2000'></span> {device_alias}",
-        "format-connected-battery": "<span font='12' rise='-2000'></span> {device_alias} {device_battery_percentage}%",
-        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
-        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
-        "on-click": "blueberry"
-    },
-    "tray": {
-        "icon-size": 16,
-        "spacing": 4
-    },
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    "custom/keyboard": {
-        "format": " {}",
-        "interval": 1,
-        "exec": "$HOME/.config/waybar/get_kbdlayout.sh"
-    },
-    "wireplumber": {
-        "on-click": "pavucontrol",
-        "on-click-right": "amixer sset Master toggle 1>/dev/null",
-        //on-click: "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        //on-scroll-down: "${wpctl} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 0.04+";
-        //on-scroll-up: "${wpctl} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 0.04-";
-        "format": "<span foreground='#fab387'>{icon}</span>  {volume}%",
-        "format-muted": " ",
-        "format-source": "",
-        "format-source-muted": "",
-        //"format-muted": "<span foreground='#fab387'> </span>",
-        //"format-icons": [ "<span foreground='#fab387'></span>" ]
-        "format-icons": {
-            "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
-            "phone": " ",
-            "portable": " ",
-            "car": " ",
-            "default": [" ", " ", " "]
-        }
+  "custom/keyboard": {
+    "format": " {}",
+    "interval": 1,
+    "exec": "$HOME/.config/waybar/get_kbdlayout.sh"
+  },
+  "wireplumber": {
+    "on-click": "pavucontrol",
+    "on-click-right": "amixer sset Master toggle 1>/dev/null",
+    //on-click: "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+    //on-scroll-down: "${wpctl} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 0.04+";
+    //on-scroll-up: "${wpctl} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 0.04-";
+    "format": "<span foreground='#fab387'>{icon}</span>  {volume}%",
+    "format-muted": " ",
+    "format-source": "",
+    "format-source-muted": "",
+    //"format-muted": "<span foreground='#fab387'> </span>",
+    //"format-icons": [ "<span foreground='#fab387'></span>" ]
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": " ",
+      "headset": " ",
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
+      "default": [" ", " ", " "]
     }
+  }
 }
