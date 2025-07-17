@@ -143,11 +143,11 @@
     "window-rewrite-default": "<span font='11'></span>",
     "window-rewrite": {
       "class<youtube>": "<span font='11'></span>",
-      "class<floorp>": "<span font='11'>󰈹</span>",
+      "class<floorp-default>": "<span font='11'>󰈹</span>",
       "class<kitty>": "<span font='11'></span>",
       "class<thunar>": "<span font='11'></span>",
       "class<obsidian>": "<span font='11'></span>",
-      "title<.*VSCodium>": "<span font='11'></span>",
+      "class<codium>": "<span font='11'></span>",
       "class<steam>": "<span font='11'></span>",
       "class<equibop>": "<span font='11'></span>",
       "class<plex>": "<span font='11'>󰚺</span>",

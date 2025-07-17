@@ -53,3 +53,4 @@ dots/Summer/waybar/modules
 dots/Summer/waybar/scripts
 dots/Summer/waybar/mediaplayer.py
 dots/localpull.sh
+dots/nohup.out
