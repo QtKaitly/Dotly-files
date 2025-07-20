@@ -1,7 +1,7 @@
-# Dotly files
+## Dotly files
 
-A repository of my personal configuration files</br>
-Currently only contains one set for just Hyprland and Waybar; </br>
-A major work in progress but a foundation.
+A repository of my personal configuration files  
+  
+Using defaults from CachyOS install with waybar. Moved to a new config based on QuickShell.
 
-I'm also working on a personal wiki to have access to a nice database of tricks </br> over the breadth of my setup with a reliance on the binds and variables set in these configs.
+My new config, is forked at [https://github.com/QtKaitly/dots-hyprland](https://github.com/QtKaitly/dots-hyprland)
